@@ -5,7 +5,7 @@ import {useHistory} from 'react-router-dom'
 
 const EditEmployee = (route) => {
   let history = useHistory()
-  const {editEmployee, employees} = useContext(GlobalContext)
+  const {employees, editEmployee} = useContext(GlobalContext)
   const [selectedUser, setSelectedUser] = useState({
     id: null,
     name: "",
@@ -16,7 +16,7 @@ const EditEmployee = (route) => {
 
   useEffect(() => {
     const employeeId = currentId
-    const selectEmployeeId = employees.map(employee => employee.id === parseInt(employeeId))
+    const selectEmployeeId = employees.find(employee => employee.id === parseInt(employeeId))
     setSelectedUser(selectEmployeeId)
     // eslint-disable-next-line
   }, [])
@@ -31,9 +31,9 @@ const EditEmployee = (route) => {
     setSelectedUser({...selectedUser, [userKey]: value})
   }
 
-  if(!selectedUser || !selectedUser.id) {
-    alert('id not match')
-  }
+  // if(!selectedUser || !selectedUser.id) {
+  //   alert('id not match')
+  // }
 
   return (
     <Fragment>
@@ -48,7 +48,7 @@ const EditEmployee = (route) => {
             </label>
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:text-gray-600 focus:shadow-outline"
-              value={selectedUser.name}
+              value={selectedUser.name || ""}
               onChange={e => handleOnChange("name", e.target.value)}
               type="text"
               placeholder="Enter name"
@@ -63,7 +63,7 @@ const EditEmployee = (route) => {
             </label>
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:text-gray-600 focus:shadow-outline"
-              value={selectedUser.location}
+              value={selectedUser.location || ""}
               onChange={e => handleOnChange("location", e.target.value)}
               type="text"
               placeholder="Enter location"
@@ -78,7 +78,7 @@ const EditEmployee = (route) => {
             </label>
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:text-gray-600 focus:shadow-outline"
-              value={selectedUser.role}
+              value={selectedUser.role || ""}
               onChange={e => handleOnChange("role", e.target.value)}
               type="text"
               placeholder="Enter role"
